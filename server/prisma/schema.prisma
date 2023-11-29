@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource uwbc {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model Supplier {
+  id                Int      @id @default(autoincrement())
+  userType          String   @default("s") 
+  email             String   @unique
+  organizationName  String   
+  address           String
+  // longitude         Float
+  // latitude          Float
+  products          SupplierProduct[]
+}
+
+model SupplierProduct {
+  id                  Int      @id @default(autoincrement())
+  productName         String
+  unitPrice           Float
+  totalPrice          Float 
+  quantity            Int
+  historicalQuantity  Int
+  createdAt           DateTime @default(now())
+  supplierId          Int 
+  supplier            Supplier @relation(fields: [supplierId], references: [id])
+}
+
+
+
+model Demander {
+  id                Int       @id @default(autoincrement())
+  userType          String    @default("d")
+  email             String    @unique
+  organizationName  String 
+  address           String
+  // longitude         Float
+  // latitude          Float
+  products          DemanderProduct[]
+}
+
+model DemanderProduct {
+  id                      Int         @id @default(autoincrement())
+  productName             String
+  unitPrice               Float
+  totalPrice              Float 
+  quantity                Int
+  historicalQuantity      Int
+  createdAt               DateTime    @default(now())  
+  demanderId              Int 
+  demander                Demander    @relation(fields: [demanderId], references: [id])
+}
+
+
+// model Deliverer {
+//   id                Int      @id @default(autoincrement())
+//   userType              String   @default("v") 
+//   firstName         String 
+//   lastName          String 
+//   phoneNumber       Int
+//   cumulativeAmount  Float  
+// }
+
+
+// model User {
+//   id          Int      @id @default(autoincrement())
+//   email       String  @unique
+//   password    String
+//   userName    String 
+//   userType    String   
+// }
+
