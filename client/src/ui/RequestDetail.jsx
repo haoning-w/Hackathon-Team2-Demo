@@ -7,19 +7,12 @@ function RequestDetail() {
   const { id } = useParams();
   if (isLoading) return null;
   const request = data.find((item) => item.id === Number(id));
-  const {
-    id: requestId,
-    organizationName,
-    timeStamp,
-    address,
-    email,
-    products,
-  } = request;
+  const { id: requestId, orgName, address, email, products } = request;
   return (
     <div className="mt-2">
       <h1 className="text-3xl font-bold mb-2">requester's info</h1>
       <div className="bg-[var(--color-dark--2)] px-12 py-6 rounded-2xl">
-        <h1 className="text-[18px]">Name: {organizationName}</h1>
+        <h1 className="text-[18px]">Name: {orgName}</h1>
         <h1 className="text-[18px]">Email: {email}</h1>
         <h1 className="text-[18px]">Address: {address}</h1>
       </div>

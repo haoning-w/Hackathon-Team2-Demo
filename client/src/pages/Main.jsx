@@ -4,7 +4,7 @@ import SideBar from "../ui/SideBar";
 
 function Main() {
   return (
-    <div className="h-[100vh] flex w-full">
+    <div className="h-[93vh] flex w-full">
       <SideBar />
       <div className="relative flex-grow">
         <AppMap />

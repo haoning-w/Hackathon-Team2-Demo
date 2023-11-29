@@ -5,8 +5,9 @@ import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { formatCurrency } from "../utils/helper";
+import submitForm from "../services/submitForm";
 
-function Demander() {
+function Requester() {
   const [itemTotalPrices, setItemTotalPrices] = useState([]);
   const [sumPrice, setSumPrice] = useState(0);
 
@@ -31,37 +32,19 @@ function Demander() {
   });
 
   function onSubmit(data) {
-    const formData = {
+    const roleData = {
       email: data.orgEmail,
-      organizationName: data.orgName,
+      orgName: data.orgName,
       address: data.orgAddress,
-      products: data.items.map((item) => ({
-        productName: item.productType,
-        unitPrice: parseFloat(item.unitPrice),
-        totalPrice: parseFloat(item.unitPrice) * parseFloat(item.quantity),
-        quantity: parseFloat(item.quantity),
-      })),
     };
+    const productsData = data.items.map((item) => ({
+      productName: item.productType,
+      unitPrice: parseFloat(item.unitPrice),
+      totalPrice: parseFloat(item.unitPrice) * parseFloat(item.quantity),
+      quantity: parseFloat(item.quantity),
+    }));
+    submitForm("requester", roleData, productsData);
 
-    fetch(`http://localhost:8000/demander`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          toast.success("Successful! Thank you for your donation!");
-          reset();
-        } else {
-          toast.error("Failed to submit data. Please try again.");
-        }
-      })
-      .catch((error) => {
-        toast.error("An error occurred. Please try again later.");
-        console.error(error);
-      });
     setSumPrice(0);
     reset();
     toast.success("Successful! Thank you for your donation!");
@@ -83,7 +66,6 @@ function Demander() {
     const total = itemTotalPrices.reduce((acc, price) => acc + price, 0);
     setSumPrice(total);
   }, [itemTotalPrices]);
-  const inputHeight = "4px";
 
   const textFieldInputStyle = {
     fontSize: "24px",
@@ -142,7 +124,10 @@ function Demander() {
           <TextField
             label="Product"
             style={textFieldStyle}
-            sx={{ input: textFieldInputStyle, flex: 1 }}
+            sx={{
+              input: textFieldInputStyle,
+              flex: 1,
+            }}
             {...register(`items[${index}].productType`, {
               required: "This field is required",
             })}
@@ -226,4 +211,4 @@ function Demander() {
   );
 }
 
-export default Demander;
+export default Requester;

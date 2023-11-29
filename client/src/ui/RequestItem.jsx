@@ -18,7 +18,7 @@ function RequestItem({ request }) {
         <div className="w-full">
           <h1 className="text-[20px] font-bold">{name}</h1>
         </div>
-        <h3 className={styles.name}>{limitStrLen(address, 20)}</h3>
+        <h3 className={styles.name}>{limitStrLen(address, 23)}</h3>
         <p className="text-2xl font-bold">Amount: {totalAmount}</p>
       </Link>
     </li>

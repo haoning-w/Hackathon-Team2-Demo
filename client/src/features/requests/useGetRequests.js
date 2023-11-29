@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import getDemanders from "../../services/getDemanders";
+import getRequests from "../../services/getRequests";
 
 function useGetRequests() {
   const { data, isLoading } = useQuery({
-    queryKey: ["all-requests"],
-    queryFn: getDemanders,
+    queryKey: ["requests"],
+    queryFn: getRequests,
   });
   return { data, isLoading };
 }

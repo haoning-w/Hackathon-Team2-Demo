@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { formatCurrency } from "../utils/helper";
+import submitForm from "../services/submitForm";
 
 function Supplier() {
   const [itemTotalPrices, setItemTotalPrices] = useState([]);
@@ -31,38 +32,21 @@ function Supplier() {
   });
 
   function onSubmit(data) {
-    const formData = {
+    const roleData = {
       email: data.orgEmail,
-      organizationName: data.orgName,
+      orgName: data.orgName,
       address: data.orgAddress,
-      products: data.items.map((item) => ({
-        productName: item.productType,
-        unitPrice: parseFloat(item.unitPrice),
-        totalPrice: parseFloat(item.unitPrice) * parseFloat(item.quantity),
-        quantity: parseFloat(item.quantity),
-      })),
     };
-
-    fetch(`http://localhost:8000/supplier`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          toast.success("Successful! Thank you for your donation!");
-          reset();
-        } else {
-          toast.error("Failed to submit data. Please try again.");
-        }
-      })
-      .catch((error) => {
-        toast.error("An error occurred. Please try again later.");
-        console.error(error);
-      });
+    const productsData = data.items.map((item) => ({
+      productName: item.productType,
+      unitPrice: parseFloat(item.unitPrice),
+      totalPrice: parseFloat(item.unitPrice) * parseFloat(item.quantity),
+      quantity: parseFloat(item.quantity),
+    }));
+    submitForm("supplier", roleData, productsData);
+    toast.success("Request submitted!");
     setSumPrice(0);
+    reset();
   }
 
   const updateItemTotalPrice = (index, totalPrice) => {

@@ -7,12 +7,12 @@ function SupplyDetail() {
   const { id } = useParams();
   if (isLoading) return null;
   const supply = data.find((item) => item.id === Number(id));
-  const { organizationName, address, products, email } = supply;
+  const { orgName, address, products, email } = supply;
   return (
     <div className="mt-2">
       <h1 className="text-3xl font-bold mb-2">Supplies' info</h1>
       <div className="bg-[var(--color-dark--2)] px-12 py-6 rounded-2xl">
-        <h1 className="text-[18px]">Name: {organizationName}</h1>
+        <h1 className="text-[18px]">Name: {orgName}</h1>
         <h1 className="text-[18px]">Email: {email}</h1>
         <h1 className="text-[18px]">Address: {address}</h1>
       </div>
@@ -25,7 +25,7 @@ function SupplyDetail() {
         ))}
       </div>
       <h1 className="mt-8 mb-2 text-3xl font-bold">
-        Number of products you can pick up
+        Input number of products you're picking up
       </h1>
       <DeliverForm products={products} />
     </div>

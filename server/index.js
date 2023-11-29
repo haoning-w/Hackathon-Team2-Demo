@@ -31,24 +31,24 @@ app.get("/suppliers", async (req, res) => {
     },
   });
 
-  const promises = allSuppliers.map(async (supplier) => {
-    const coords = await addressToCoords(supplier.address);
-    // Return a new object with the original demander data and the coords
-    return { ...supplier, coords };
-  });
+  // const promises = allSuppliers.map(async (supplier) => {
+  //   const coords = await addressToCoords(supplier.address);
+  //   // Return a new object with the original demander data and the coords
+  //   return { ...supplier, coords };
+  // });
 
-  // Use Promise.all to wait for all promises to resolve
-  const suppliersWithCoords = await Promise.all(promises);
+  // // Use Promise.all to wait for all promises to resolve
+  // const suppliersWithCoords = await Promise.all(promises);
 
-  const finalData = suppliersWithCoords.map((item, ind) => ({
-    ...item,
-    latlng: {
-      lat: item.coords.features[0].geometry.coordinates[1],
-      lng: item.coords.features[0].geometry.coordinates[0],
-    },
-  }));
+  // const finalData = suppliersWithCoords.map((item, ind) => ({
+  //   ...item,
+  //   latlng: {
+  //     lat: item.coords.features[0].geometry.coordinates[1],
+  //     lng: item.coords.features[0].geometry.coordinates[0],
+  //   },
+  // }));
 
-  res.json(finalData);
+  res.json(allSuppliers);
 });
 
 // 2. create a new supplier (with at least one product)
@@ -112,27 +112,27 @@ app.get("/demanders", async (req, res) => {
     },
   });
 
-  const promises = allDemanders.map(async (demander) => {
-    const coords = await addressToCoords(demander.address);
-    // Return a new object with the original demander data and the coords
-    return { ...demander, coords };
-  });
+  // const promises = allDemanders.map(async (demander) => {
+  //   const coords = await addressToCoords(demander.address);
+  //   // Return a new object with the original demander data and the coords
+  //   return { ...demander, coords };
+  // });
 
-  // Use Promise.all to wait for all promises to resolve
-  const demandersWithCoords = await Promise.all(promises);
-  // demandersWithCoords.forEach((item, ind) =>
-  //   console.log(item.email, item.id, item.coords.features[0].geometry)
-  // );
-  // res.json(demandersWithCoords);
-  const finalData = demandersWithCoords.map((item, ind) => ({
-    ...item,
-    latlng: {
-      lat: item.coords.features[0].geometry.coordinates[1],
-      lng: item.coords.features[0].geometry.coordinates[0],
-    },
-  }));
+  // // Use Promise.all to wait for all promises to resolve
+  // const demandersWithCoords = await Promise.all(promises);
+  // // demandersWithCoords.forEach((item, ind) =>
+  // //   console.log(item.email, item.id, item.coords.features[0].geometry)
+  // // );
+  // // res.json(demandersWithCoords);
+  // const finalData = demandersWithCoords.map((item, ind) => ({
+  //   ...item,
+  //   latlng: {
+  //     lat: item.coords.features[0].geometry.coordinates[1],
+  //     lng: item.coords.features[0].geometry.coordinates[0],
+  //   },
+  // }));
 
-  res.json(finalData);
+  res.json(allDemanders);
 });
 
 // 4. create a new demander (with at least one product)

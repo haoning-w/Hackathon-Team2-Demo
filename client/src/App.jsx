@@ -1,5 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import Test from "./pages/Test";
 import AppLayout from "./ui/AppLayout";
 
 import { Provider } from "react-redux";
@@ -15,7 +14,7 @@ import SuppliesList from "./features/supplies/SuppliesList";
 import SupplyDetail from "./features/supplies/SupplyDetail";
 import Dashboard from "./pages/Dashboard";
 import Supplier from "./pages/Supplier";
-import Demander from "./pages/Demander.jsx";
+import Requester from "./pages/Requester.jsx";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +28,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="supplier" element={<Supplier />} />
-              <Route path="requester" element={<Demander />} />
+              <Route path="requester" element={<Requester />} />
             </Route>
             <Route element={<AppLayout />}>
               <Route index replace element={<Navigate to="/home" />} />
@@ -41,7 +40,6 @@ function App() {
                 <Route path="/main/supplies/:id" element={<SupplyDetail />} />
               </Route>
             </Route>
-            <Route path="/test" element={<Test />} />
           </Routes>
         </BrowserRouter>
         <Toast />

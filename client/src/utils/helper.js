@@ -21,7 +21,7 @@ export function transformData(originalData) {
   return originalData.map((item) => {
     return {
       id: String(item.id),
-      name: item.organizationName,
+      name: item.orgName,
       address: item.address,
       products: item.products.map((product) => ({
         name: product.productName,
